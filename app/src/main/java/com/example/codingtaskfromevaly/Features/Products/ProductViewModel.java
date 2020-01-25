@@ -33,8 +33,7 @@ public class ProductViewModel extends AndroidViewModel {
     }
 
     public void updateAllCategoryToLocal(boolean isFirstTimeThisCategory,String categorySlug) {
-        if (isFirstTimeThisCategory)
-            deleteallproducts(categorySlug);
+
         if (productModelMutableLiveData != null && productModelMutableLiveData.getValue() != null) {
             for (ProductModel.Results results : productModelMutableLiveData.getValue().getResults()
             ) {

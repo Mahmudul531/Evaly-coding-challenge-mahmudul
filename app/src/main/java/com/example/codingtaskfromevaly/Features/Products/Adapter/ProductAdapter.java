@@ -30,6 +30,10 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.allproduct = allproduct;
     }
 
+    public void addItem(Products datum) {
+        allproduct.add(datum);
+        notifyItemInserted(allproduct.size());
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
