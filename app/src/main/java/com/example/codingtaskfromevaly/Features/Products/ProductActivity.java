@@ -3,8 +3,6 @@ package com.example.codingtaskfromevaly.Features.Products;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -22,14 +20,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ProductActivity extends AppCompatActivity {
     ProductViewModel productViewModel;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.tx_inset_data)
-    TextView txInsetData;
+
+    boolean isFirstTime = true;
+    int limit = 10;
+    int page = 1;
+    String category;
 
 
     public static void open(Category category, Activity activity) {
@@ -39,20 +39,36 @@ public class ProductActivity extends AppCompatActivity {
 
     }
 
+    public void setData() {
+        if (getIntent() != null) {
+            Category category = new Gson().fromJson(getIntent().getStringExtra("category"), Category.class);
+            this.category = category.getSlag();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prouct_list);
         ButterKnife.bind(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        setData();
         productViewModel =
                 ViewModelProviders.of(this).get(ProductViewModel.class);
-        productViewModel.getAllproduct().observe(this, new Observer<List<Products>>() {
+        productViewModel.getAllproduct(category).observe(this, new Observer<List<Products>>() {
             @Override
             public void onChanged(List<Products> products) {
-                Toast.makeText(ProductActivity.this, "Updated data product", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ProductActivity.this, "Updated data product", Toast.LENGTH_SHORT).show();
                 populateProduct(products);
+            }
+        });
+        productViewModel.getProductModelMutableLiveData(category, page, limit).observe(this, new Observer<ProductModel>() {
+            @Override
+            public void onChanged(ProductModel productModel) {
+                if (productModel != null) {
+                    productViewModel.updateAllCategoryToLocal(isFirstTime, category);
+                    isFirstTime = false;
+                }
             }
         });
     }
@@ -64,10 +80,10 @@ public class ProductActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.tx_inset_data)
-    public void onViewClicked() {
-        Products products = new Products("a", "b", "b", "b", "b", "b", "d");
-        productViewModel.insert(products);
-
-    }
+//    @OnClick(R.id.tx_inset_data)
+//    public void onViewClicked() {
+//        Products products = new Products("a", "b", "b", "b", "b", "b", "d", category);
+//        productViewModel.insert(products);
+//
+//    }
 }

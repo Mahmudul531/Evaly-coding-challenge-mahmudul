@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Category;
 import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Products;
 
-@Database(entities = {Category.class, Products.class}, version = 1,exportSchema = false)
+@Database(entities = {Category.class, Products.class}, version = 7,exportSchema = false)
 public abstract  class EvalyDatabase extends RoomDatabase {
     private static EvalyDatabase instance;
     public abstract EvalyDao evalyDao();

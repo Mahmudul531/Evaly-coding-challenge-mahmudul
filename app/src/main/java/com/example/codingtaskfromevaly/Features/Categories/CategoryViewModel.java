@@ -39,7 +39,7 @@ public class CategoryViewModel extends AndroidViewModel {
     }
 
     public void updateAllCategoryToLocal() {
-        deleteall();
+        //deleteall();
         if (categoriModelMutableLiveData != null && categoriModelMutableLiveData.getValue() != null) {
             List<Category> categoryList = new ArrayList<>();
             for (CategoriModel catModel : categoriModelMutableLiveData.getValue()

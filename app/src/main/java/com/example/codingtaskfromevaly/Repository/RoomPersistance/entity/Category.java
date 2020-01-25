@@ -2,11 +2,12 @@ package com.example.codingtaskfromevaly.Repository.RoomPersistance.entity;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import butterknife.Optional;
 
-@Entity(tableName = "category")
+@Entity(tableName = "category", indices = @Index(value = {"slag"}, unique = true))
 public class Category {
 
     @PrimaryKey(autoGenerate = true)

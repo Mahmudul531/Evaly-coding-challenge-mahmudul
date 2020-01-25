@@ -45,8 +45,8 @@ public class CategoryActivity extends AppCompatActivity implements categoryClick
         });
 
         categoryViewModel.getCategoriModelMutableLiveData().observe(this, categoriModel -> {
-            categoryViewModel.deleteall();
-            List<CategoriModel> mycategory = categoriModel;
+
+
             categoryViewModel.updateAllCategoryToLocal();
         });
     }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.codingtaskfromevaly.Features.Categories.Adapter.CategoryAdapter;
 import com.example.codingtaskfromevaly.R;
 import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Products;
 
@@ -38,8 +40,12 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolderProduct)holder).tvProductname.setText(allproduct.get(position).getName());
-        ((ViewHolderProduct)holder).tvPrice.setText(" Min: "+allproduct.get(position).getMin_price()+" Max: "+allproduct.get(position).getMax_price());
+        ((ViewHolderProduct) holder).tvProductname.setText(allproduct.get(position).getName());
+        ((ViewHolderProduct) holder).tvPrice.setText(" Min: " + allproduct.get(position).getMin_price() + " Max: " + allproduct.get(position).getMax_price());
+
+        Glide.with(context)
+                .load(allproduct.get(position).getProduct_image())
+                .into(((ViewHolderProduct) holder).ivPicture);
     }
 
     @Override
