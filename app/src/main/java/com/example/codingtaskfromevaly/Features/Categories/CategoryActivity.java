@@ -1,5 +1,6 @@
 package com.example.codingtaskfromevaly.Features.Categories;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.codingtaskfromevaly.Features.Categories.Adapter.CategoryAdapter;
+import com.example.codingtaskfromevaly.Features.Products.ProductActivity;
 import com.example.codingtaskfromevaly.R;
 import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Category;
 
@@ -19,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements categoryClickListener<Category> {
     CategoryViewModel categoryViewModel;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -37,7 +39,7 @@ public class CategoryActivity extends AppCompatActivity {
         categoryViewModel.getAllcategory().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
-              //  Toast.makeText(CategoryActivity.this, "Updated data product", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(CategoryActivity.this, "Updated data product", Toast.LENGTH_SHORT).show();
                 populateCategory(categories);
             }
         });
@@ -50,7 +52,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     public void populateCategory(List<Category> categories) {
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, categories);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, categories, this);
         recyclerView.setAdapter(categoryAdapter);
 
     }
@@ -60,6 +62,14 @@ public class CategoryActivity extends AppCompatActivity {
     public void onViewClicked() {
         Category category = new Category("name", "slag", "image");
         categoryViewModel.insert(category);
+
+    }
+
+    @Override
+    public void onclickOfCategory(boolean isClicked, Category categoryData) {
+        if (isClicked) {
+            ProductActivity.open(categoryData, this);
+        }
 
     }
 }

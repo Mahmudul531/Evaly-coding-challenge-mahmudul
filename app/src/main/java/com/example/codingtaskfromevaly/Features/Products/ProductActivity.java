@@ -1,5 +1,7 @@
 package com.example.codingtaskfromevaly.Features.Products;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.codingtaskfromevaly.Features.Products.Adapter.ProductAdapter;
 import com.example.codingtaskfromevaly.R;
+import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Category;
 import com.example.codingtaskfromevaly.Repository.RoomPersistance.entity.Products;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -26,6 +30,14 @@ public class ProductActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.tx_inset_data)
     TextView txInsetData;
+
+
+    public static void open(Category category, Activity activity) {
+        Intent intent = new Intent(activity, ProductActivity.class);
+        intent.putExtra("category", new Gson().toJson(category));
+        activity.startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +66,7 @@ public class ProductActivity extends AppCompatActivity {
 
     @OnClick(R.id.tx_inset_data)
     public void onViewClicked() {
-        Products products = new Products("a","b","b","b","b","b","d");
+        Products products = new Products("a", "b", "b", "b", "b", "b", "d");
         productViewModel.insert(products);
 
     }
